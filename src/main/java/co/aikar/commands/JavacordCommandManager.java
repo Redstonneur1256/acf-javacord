@@ -18,6 +18,7 @@ package co.aikar.commands;
 
 import co.aikar.commands.apachecommonslang.ApacheCommonsExceptionUtil;
 import org.javacord.api.DiscordApi;
+import org.javacord.api.entity.ApplicationOwner;
 import org.javacord.api.entity.channel.ChannelType;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.event.message.MessageCreateEvent;
@@ -94,7 +95,7 @@ public class JavacordCommandManager extends CommandManager<
 
     void initializeBotOwner() {
         if (botOwner == 0L) {
-            botOwner = api.getApplicationInfo().join().getOwnerId();
+            botOwner = api.requestApplicationInfo().join().getOwner().map(ApplicationOwner::getId).orElse(0L);
 //            if (api.getAccountType() == AccountType.BOT) {
 //                botOwner = api.getApplicationInfo().join().getOwnerId();
 //            } else {

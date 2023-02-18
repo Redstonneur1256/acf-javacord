@@ -18,8 +18,6 @@ package co.aikar.commands;
 
 import co.aikar.commands.javacord.contexts.Member;
 import co.aikar.commands.javacord.util.JavacordEmbedBuilder;
-import co.aikar.commands.javacord.util.JavacordMessageBuilder;
-import co.aikar.locales.MessageKey;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
@@ -259,15 +257,6 @@ public class JavacordCommandEvent implements CommandIssuer {
      */
     public @NotNull CompletableFuture<Message> replyfEmbed(@NotNull Color color, @NotNull File authorIcon, @NotNull String author, @NotNull String description, Object... replacements) {
         return embedBuilder().setColor(color).setAuthor(author, null, authorIcon).setDescription(String.format(description, replacements)).send();
-    }
-
-    /**
-     * Creates a new {@link JavacordMessageBuilder} for building a new message within the context.
-     *
-     * @return the new {@link JavacordMessageBuilder}.
-     */
-    public @NotNull JavacordMessageBuilder messageBuilder() {
-        return JavacordMessageBuilder.forChannel(getChannel());
     }
 
     /**

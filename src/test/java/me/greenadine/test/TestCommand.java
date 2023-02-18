@@ -5,16 +5,17 @@ import co.aikar.commands.JavacordCommandEvent;
 import co.aikar.commands.annotation.*;
 import co.aikar.commands.javacord.contexts.Member;
 import co.aikar.commands.javacord.contexts.UnicodeEmoji;
-import co.aikar.commands.javacord.util.TestActionRowBuilder;
 import org.javacord.api.entity.channel.*;
 import org.javacord.api.entity.emoji.CustomEmoji;
 import org.javacord.api.entity.emoji.Emoji;
+import org.javacord.api.entity.message.component.ActionRowBuilder;
 import org.javacord.api.entity.message.component.Button;
+import org.javacord.api.entity.message.component.LowLevelComponent;
 import org.javacord.api.entity.permission.Role;
 import org.javacord.api.entity.user.User;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @CommandAlias("test")
 @Description("Various test commands.")
@@ -114,10 +115,10 @@ public class TestCommand extends BaseCommand {
 
     @Subcommand("actionrow")
     public void onActionrow(JavacordCommandEvent event) {
-        TestActionRowBuilder testActionRowBuilder = new TestActionRowBuilder();
-        Collection<Button> buttonsRow1 = new ArrayList<>();
-        Collection<Button> buttonsRow2 = new ArrayList<>();
-        Collection<Button> buttonsRow3 = new ArrayList<>();
+        ActionRowBuilder builder = new ActionRowBuilder();
+        List<LowLevelComponent> buttonsRow1 = new ArrayList<>();
+        List<LowLevelComponent> buttonsRow2 = new ArrayList<>();
+        List<LowLevelComponent> buttonsRow3 = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
             buttonsRow1.add(Button.primary("button_" + (i + 1), "Button " + (i + 1)));
@@ -129,11 +130,11 @@ public class TestCommand extends BaseCommand {
             buttonsRow3.add(Button.primary("button_" + (i + 1), "Button " + (i + 1)));
         }
 
-        testActionRowBuilder.addComponentsToRow(0, buttonsRow1);
-        testActionRowBuilder.addComponentsToRow(1, buttonsRow2);
-        testActionRowBuilder.addComponentsToRow(2, buttonsRow3);
+        builder.addComponents(buttonsRow1);
+        builder.addComponents(buttonsRow2);
+        builder.addComponents(buttonsRow3);
 
-        testActionRowBuilder.build().setContent("Test").send(event.getChannel());
+        event.getChannel().sendMessage("Test", builder.build());
     }
 
     @Subcommand("perm")

@@ -26,7 +26,6 @@ import org.javacord.api.entity.message.embed.EmbedField;
 import org.javacord.api.entity.user.User;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -38,9 +37,7 @@ import java.util.function.Predicate;
 
 /**
  * Convenience class for building quick embeds.
- *
- *
- */
+ **/
 public class JavacordEmbedBuilder extends EmbedBuilder {
 
     private final TextChannel channel;

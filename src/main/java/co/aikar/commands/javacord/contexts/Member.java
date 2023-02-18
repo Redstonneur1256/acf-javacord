@@ -39,6 +39,7 @@ import org.javacord.api.listener.channel.user.PrivateChannelCreateListener;
 import org.javacord.api.listener.channel.user.PrivateChannelDeleteListener;
 import org.javacord.api.listener.interaction.*;
 import org.javacord.api.listener.message.MessageCreateListener;
+import org.javacord.api.listener.message.MessageReplyListener;
 import org.javacord.api.listener.message.reaction.ReactionAddListener;
 import org.javacord.api.listener.message.reaction.ReactionRemoveListener;
 import org.javacord.api.listener.server.member.ServerMemberBanListener;
@@ -638,28 +639,28 @@ public class Member implements User {
     /**
      * Bans the member from the server.
      *
-     * @param deleteMessageDays the number of days to delete the messages for (0-7).
+     * @param duration the duration in which to delete the messages for.
      *
      * @return A {@code Future} to check if the ban was successful.
      *
-     * @see Server#banUser(User, int)
+     * @see Server#banUser(User, Duration)
      */
-    public CompletableFuture<Void> ban(int deleteMessageDays) {
-        return server.banUser(user, deleteMessageDays);
+    public CompletableFuture<Void> ban(Duration duration) {
+        return server.banUser(user, duration);
     }
 
     /**
      * Bans the member from the server.
      *
-     * @param deleteMessageDays the number of days to delete the messages for (0-7).
+     * @param duration the duration in which to delete the messages for.
      * @param reason the audit log reason for this action.
      *
      * @return A {@code Future} to check if the ban was successful.
      *
-     * @see Server#banUser(User, int, String)
+     * @see Server#banUser(User, Duration, String)
      */
-    public CompletableFuture<Void> ban(int deleteMessageDays, String reason) {
-        return server.banUser(user, deleteMessageDays, reason);
+    public CompletableFuture<Void> ban(Duration duration, String reason) {
+        return server.banUser(user, duration, reason);
     }
 
     /**
@@ -1033,6 +1034,11 @@ public class Member implements User {
     }
 
     @Override
+    public Optional<String> getServerAvatarHash(Server server) {
+        return user.getServerAvatarHash(server);
+    }
+
+    @Override
     public Optional<Icon> getServerAvatar(Server server) {
         return user.getServerAvatar(server);
     }
@@ -1070,6 +1076,11 @@ public class Member implements User {
     @Override
     public Optional<String> getNickname(Server server) {
         return server.getNickname(user);
+    }
+
+    @Override
+    public Optional<Instant> getServerBoostingSinceTimestamp(Server server) {
+        return user.getServerBoostingSinceTimestamp(server);
     }
 
     @Override
@@ -1440,6 +1451,16 @@ public class Member implements User {
     @Override
     public List<MessageCreateListener> getMessageCreateListeners() {
         return user.getMessageCreateListeners();
+    }
+
+    @Override
+    public ListenerManager<MessageReplyListener> addMessageReplyListener(MessageReplyListener messageReplyListener) {
+        return null;
+    }
+
+    @Override
+    public List<MessageReplyListener> getMessageReplyListeners() {
+        return null;
     }
 
     @Override
